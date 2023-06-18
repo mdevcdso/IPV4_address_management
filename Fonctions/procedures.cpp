@@ -1,10 +1,12 @@
-//Librairie C++
+//Librairies C++
 #include <iostream>
 #include <string>
 #include <sstream>
 
+//directive qui utilise tous les noms de l'espace de noms standard std
 using namespace std;
 
+//diviser une adresse IP sous forme de chaîne de caractères en octets individuels + stockage dans un tableau d'entiers octets
 void splitIPAddress(const string& ipAddress, int* octets) {
     stringstream ss(ipAddress);
     string segment;
@@ -15,6 +17,7 @@ void splitIPAddress(const string& ipAddress, int* octets) {
     }
 }
 
+//convertit un préfixe CIDR en une masque de sous-réseau
 void convertCIDRToMask(int prefix, int* mask) {
     for (int i = 0; i < 4; i++) {
         if (prefix >= 8) {
@@ -29,6 +32,7 @@ void convertCIDRToMask(int prefix, int* mask) {
     }
 }
 
+//imprime l'adresse IP sous forme de chaîne de caractères
 void printIPAddress(const int* octets) {
     for (int i = 0; i < 4; i++) {
         cout << octets[i];
@@ -39,6 +43,7 @@ void printIPAddress(const int* octets) {
     cout << endl;
 }
 
+//imprime l'adresse IP sous forme binaire
 void printBinaryIPAddress(const int* octets) {
     for (int i = 0; i < 4; i++) {
         for (int j = 7; j >= 0; j--) {
@@ -52,10 +57,12 @@ void printBinaryIPAddress(const int* octets) {
     cout << endl;
 }
 
+//imprimer le masque de sous-réseau
 void printMask(const int* mask) {
     printIPAddress(mask);
 }
 
+//imprime différentes informations liées au réseau : adresse réseau, l'adresse de diffusion, les adresses minimale et maximale des hôtes, et le nombre total d'hôtes dans le réseau
 void printNetworkInfo(const int* ipAddress, const int* mask) {
     int networkAddress[4];
     for (int i = 0; i < 4; i++) {

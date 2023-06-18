@@ -1,10 +1,12 @@
-//Librairie de base en C++
+//Librairies de base en C++
 #include <iostream>
 #include <string>
 #include <sstream>
 
+//directive qui utilise tous les noms de l'espace de noms standard std
 using namespace std;
 
+//Declaration de la variable menu
 string menu[] = {
     "1) Saisir une adresse IP d'un poste du réseau",
     "2) Saisir un masque de sous-réseau en format adresse IPV4",
@@ -27,6 +29,7 @@ int AfficheMenu() {
     return choix;
 }
 
+//vérifie si une chaîne de caractères AdresseIP représente une adresse IP valide
 bool AdresseIP(const string& ipAddress) {
     stringstream ss(ipAddress);
     string segment;
@@ -44,6 +47,7 @@ bool AdresseIP(const string& ipAddress) {
     return count == 4;
 }
 
+//vérifie si une chaîne de caractères cidr représente une notation CIDR valide
 bool CIDR(const string& cidr) {
     stringstream ss(cidr);
     int prefix;
