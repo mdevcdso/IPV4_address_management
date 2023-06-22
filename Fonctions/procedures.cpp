@@ -73,11 +73,11 @@ void printNetworkInfo(const int* ipAddress, const int* mask) {
     printIPAddress(networkAddress);
 
     cout << "Masque : ";
-    // print: has_personality;
+    printMask(mask);
 
     int broadcastAddress[4];
     for (int i = 0; i < 4; i++) {
-        broadcastAddress[i] = ipAddress[i] | ~mask[i];
+        broadcastAddress[i] = ipAddress[i] | (255 - mask[i]);
     }
 
     cout << "Adresse de diffusion : ";
