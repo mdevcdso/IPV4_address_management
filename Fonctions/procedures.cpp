@@ -17,7 +17,7 @@ void splitIPAddress(const string& ipAddress, int* octets) {
     }
 }
 
-//convertit un préfixe CIDR en une masque de sous-réseau
+//convertir un préfixe CIDR en une masque de sous-réseau
 void convertCIDRToMask(int prefix, int* mask) {
     for (int i = 0; i < 4; i++) {
         if (prefix >= 8) {
@@ -32,7 +32,7 @@ void convertCIDRToMask(int prefix, int* mask) {
     }
 }
 
-//imprime l'adresse IP sous forme de chaîne de caractères
+//imprimer l'adresse IP sous forme de chaîne de caractères
 void printIPAddress(const int* octets) {
     for (int i = 0; i < 4; i++) {
         cout << octets[i];
@@ -43,7 +43,7 @@ void printIPAddress(const int* octets) {
     cout << endl;
 }
 
-//imprime l'adresse IP sous forme binaire
+//imprimer l'adresse IP sous forme binaire
 void printBinaryIPAddress(const int* octets) {
     for (int i = 0; i < 4; i++) {
         for (int j = 7; j >= 0; j--) {
@@ -62,7 +62,7 @@ void printMask(const int* mask) {
     printIPAddress(mask);
 }
 
-//imprime différentes informations liées au réseau : adresse réseau, l'adresse de diffusion, les adresses minimale et maximale des hôtes, et le nombre total d'hôtes dans le réseau
+//imprimer différentes informations liées au réseau : adresse réseau, l'adresse de diffusion, les adresses minimale et maximale des hotes, et le nombre total d'hotes dans le réseau
 void printNetworkInfo(const int* ipAddress, const int* mask) {
     int networkAddress[4];
     for (int i = 0; i < 4; i++) {
@@ -89,7 +89,7 @@ void printNetworkInfo(const int* ipAddress, const int* mask) {
     }
     hostMinAddress[3] += 1;
 
-    cout << "Adresse de l'hôte minimum : ";
+    cout << "Adresse de l'hote minimum : ";
     printIPAddress(hostMinAddress);
 
     int hostMaxAddress[4];
@@ -98,7 +98,7 @@ void printNetworkInfo(const int* ipAddress, const int* mask) {
     }
     hostMaxAddress[3] -= 1;
 
-    cout << "Adresse de l'hôte maximum : ";
+    cout << "Adresse de l'hote maximum : ";
     printIPAddress(hostMaxAddress);
 
     int totalHosts = 1;
@@ -106,5 +106,5 @@ void printNetworkInfo(const int* ipAddress, const int* mask) {
         totalHosts *= (i == 3) ? (hostMaxAddress[i] - hostMinAddress[i] + 1) : 256;
     }
 
-    cout << "Nombre total d'hôtes : " << totalHosts << endl;
+    cout << "Nombre total d'hotes : " << totalHosts << endl;
 } 
