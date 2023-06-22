@@ -32,7 +32,6 @@ int AfficheMenu() {
 //vérifier si une chaîne de caractères AdresseIP représente une adresse IP valide
 bool AdresseIP(const string& adressIP) {
     string segment;
-    int num = stoi(segment);
     int count = 0;
 
     for (char i : adressIP) //itération de chaque caractere dans la chaine adressIP
@@ -43,7 +42,7 @@ bool AdresseIP(const string& adressIP) {
             {
                 return false;
             }
-
+            int num = stoi(segment); //convertie une chaîne de caractères (segment) en un entier num
             if (num < 0 || num > 255) //si un chiffre est inférieur à 0 et supérieur à 255
             {
                 return false;
@@ -63,12 +62,12 @@ bool AdresseIP(const string& adressIP) {
     if (segment.empty() || segment.find_first_not_of("0123456789") != string::npos) {
         return false;
     }
-
+    int num = stoi(segment);
     if (num < 0 || num > 255) {
         return false;
     }
     count++;
-    
+
     return count == 4; //vérification des 4 segments valides
 }
 
