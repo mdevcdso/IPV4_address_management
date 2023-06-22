@@ -73,8 +73,13 @@ bool AdresseIP(const string& adressIP) {
 
 //vérifier si une chaîne de caractères cidr représente une notation CIDR valide
 bool CIDR(const string& cidr) {
-    stringstream ss(cidr);
-    int prefix;
-    char delimiter;
-    return (ss >> prefix && prefix >= 0 && prefix <= 32 && !(ss >> delimiter));
+    int prefix = 0; //initialisation de la variable prefix
+    for (char c : cidr) { //itération de chaque caractere c de la chaine cidr
+        if (c >= '0' && c <= '9') {
+            prefix = prefix * 10 + (c - '0'); //si c est un chiffre, il est converti en un nombre en soustrayant le code ASCII de '0' et prefix mis à jour en étant multiplié par 10
+        } else {
+            return false;
+        }
+    }
+    return (prefix >= 0 && prefix <= 32); //vérifie si prefix est entre 0 et 32 ; si c'est le cas, la fonction renvoie true sinon false
 }
