@@ -8,27 +8,42 @@ using namespace std;
 
 //diviser une adresse IP sous forme de chaîne de caractères en octets individuels + stockage dans un tableau d'entiers octets
 void diviseAdresseIP(const string& adresseIP, int* octets) {
-    stringstream ss(adresseIP);
-    string segment;
-    int index = 0;
-    while (getline(ss, segment, '.')) {
-        int num = stoi(segment);
-        octets[index++] = num;
+    string segment; //pour stocker chaque octet d'adresse IP
+    int index = 0, start = 0; //index est un compteur et start marque le début de chaque segment
+    
+    for (int i = 0; i < adresseIP.length(); i++) //parcourir chaque caractere de adresseIP
+    {
+        if (adresseIP[i] == '.')
+        {
+            segment = adresseIP.substr(start, i - start); //pour extraire le segment entier en utilisant la position start de début et start - 1 pour la fin du segment
+            octets[index++] = stoi(segment); //on convertit le segment extrait en un entier avec stoi et on sauvegarde la position du segment en incrémentant index
+            start = i + 1; //marquer le début du porchain octet ou segment de l'adresse IP
+        }
     }
+    //traitement du dernier segment après le dernier '.'
+    segment = adresseIP.substr(start); //extraction du dernier segment
+    octets[index] = stoi(segment); //convertir le dernier segment en un entier sans incrémenter index pour marquer la fin de l'adresse IP
 }
 
-//convertir un préfixe CIDR en une masque de sous-réseau
+//convertir un préfixe CIDR en un masque de sous-réseau
 void convertirCIDREnMasque(int prefix, int* masque) {
-    for (int i = 0; i < 4; i++) {
-        if (prefix >= 8) {
-            masque[i] = 255;
-            prefix -= 8;
-        } else if (prefix > 0) {
-            masque[i] = 256 - (1 << (8 - prefix));
-            prefix = 0;
+    for (int i = 0; i < 4; i++)
+    {
+        if (prefix >= 8)
+        {
+            masque[i] = 255; //si prefix CIDR supérieur ou égal à 8, on attribue 255 (masque entier)
+        } else if (prefix > 0)
+        {
+            int valeurOctet = 0;
+            for (int j = 7; i >= (8 - prefix); j--) //j = nb de bits actifs pour l'octet
+            {
+                valeurOctet += (1 << j); //ajouter la valeur de l'octet à la variable
+            }
+            masque[i] = valeurOctet;
         } else {
             masque[i] = 0;
         }
+        prefix -= 8;
     }
 }
 
