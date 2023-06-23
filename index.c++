@@ -25,7 +25,7 @@ int main() {
                 cout << "Saisir une adresse IP : ";
                 cin >> adresseIP;
                 if (AdresseIP(adresseIP)) {
-                    splitIPAddress(adresseIP, ipOctets);
+                    diviseAdresseIP(adresseIP, ipOctets);
                 } else {
                     cout << "Adresse IP invalide !" << endl;
                 }
@@ -34,7 +34,7 @@ int main() {
                 cout << "Saisir un masque de sous-reseau en format adresse IPV4 : ";
                 cin >> masqueSousReseaux;
                 if (AdresseIP(masqueSousReseaux)) {
-                    splitIPAddress(masqueSousReseaux, maskOctets);
+                    diviseAdresseIP(masqueSousReseaux, maskOctets);
                 } else {
                     cout << "Masque invalide !" << endl;
                 }
@@ -44,18 +44,18 @@ int main() {
                 cin >> masqueSousReseaux;
                 if (CIDR(masqueSousReseaux)) {
                     int prefix = stoi(masqueSousReseaux);
-                    convertCIDRToMask(prefix, maskOctets);
+                    convertirCIDREnMasque(prefix, maskOctets);
                 } else {
                     cout << "CIDR invalide !" << endl;
                 }
                 break;
             case 4:
                 cout << "Adresse IP en cours : ";
-                printIPAddress(ipOctets);
+                genererAddressIP(ipOctets);
                 break;
             case 5:
                 cout << "Masque en cours : ";
-                printMask(maskOctets);
+                genererMasque(maskOctets);
                 break;
             case 6:
                 cout << "Infos reseau :" << endl;
@@ -63,7 +63,7 @@ int main() {
                 break;
             case 7:
                 cout << "Adresse IP du poste en format binaire : ";
-                printBinaryIPAddress(ipOctets);
+                genererAdresseIPBinaire(ipOctets);
                 break;
             case 8:
                 cout << "Au revoir !" << endl;

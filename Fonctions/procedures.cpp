@@ -7,8 +7,8 @@
 using namespace std;
 
 //diviser une adresse IP sous forme de chaîne de caractères en octets individuels + stockage dans un tableau d'entiers octets
-void splitIPAddress(const string& ipAddress, int* octets) {
-    stringstream ss(ipAddress);
+void diviseAdresseIP(const string& adresseIP, int* octets) {
+    stringstream ss(adresseIP);
     string segment;
     int index = 0;
     while (getline(ss, segment, '.')) {
@@ -18,22 +18,22 @@ void splitIPAddress(const string& ipAddress, int* octets) {
 }
 
 //convertir un préfixe CIDR en une masque de sous-réseau
-void convertCIDRToMask(int prefix, int* mask) {
+void convertirCIDREnMasque(int prefix, int* masque) {
     for (int i = 0; i < 4; i++) {
         if (prefix >= 8) {
-            mask[i] = 255;
+            masque[i] = 255;
             prefix -= 8;
         } else if (prefix > 0) {
-            mask[i] = 256 - (1 << (8 - prefix));
+            masque[i] = 256 - (1 << (8 - prefix));
             prefix = 0;
         } else {
-            mask[i] = 0;
+            masque[i] = 0;
         }
     }
 }
 
-//imprimer l'adresse IP sous forme de chaîne de caractères
-void printIPAddress(const int* octets) {
+//génère l'adresse IP sous forme de chaîne de caractères
+void genererAddressIP(const int* octets) {
     for (int i = 0; i < 4; i++) {
         cout << octets[i];
         if (i < 3) {
@@ -43,8 +43,8 @@ void printIPAddress(const int* octets) {
     cout << endl;
 }
 
-//imprimer l'adresse IP sous forme binaire
-void printBinaryIPAddress(const int* octets) {
+//génère l'adresse IP sous forme binaire
+void genererAdresseIPBinaire(const int* octets) {
     for (int i = 0; i < 4; i++) {
         for (int j = 7; j >= 0; j--) {
             int bit = (octets[i] >> j) & 1;
@@ -58,30 +58,30 @@ void printBinaryIPAddress(const int* octets) {
 }
 
 //imprimer le masque de sous-réseau
-void printMask(const int* mask) {
-    printIPAddress(mask);
+void genererMasque(const int* masque) {
+    genererAddressIP(masque);
 }
 
 //imprimer différentes informations liées au réseau : adresse réseau, l'adresse de diffusion, les adresses minimale et maximale des hotes, et le nombre total d'hotes dans le réseau
-void printNetworkInfo(const int* ipAddress, const int* mask) {
+void printNetworkInfo(const int* adresseIP, const int* masque) {
     int networkAddress[4];
     for (int i = 0; i < 4; i++) {
-        networkAddress[i] = ipAddress[i] & mask[i];
+        networkAddress[i] = adresseIP[i] & masque[i];
     }
 
     cout << "Adresse réseau : ";
-    printIPAddress(networkAddress);
+    genererAddressIP(networkAddress);
 
     cout << "Masque : ";
-    printMask(mask);
+    genererMasque(masque);
 
     int broadcastAddress[4];
     for (int i = 0; i < 4; i++) {
-        broadcastAddress[i] = ipAddress[i] | (255 - mask[i]);
+        broadcastAddress[i] = adresseIP[i] | (255 - masque[i]);
     }
 
     cout << "Adresse de diffusion : ";
-    printIPAddress(broadcastAddress);
+    genererAddressIP(broadcastAddress);
 
     int hostMinAddress[4];
     for (int i = 0; i < 4; i++) {
@@ -90,7 +90,7 @@ void printNetworkInfo(const int* ipAddress, const int* mask) {
     hostMinAddress[3] += 1;
 
     cout << "Adresse de l'hote minimum : ";
-    printIPAddress(hostMinAddress);
+    genererAddressIP(hostMinAddress);
 
     int hostMaxAddress[4];
     for (int i = 0; i < 4; i++) {
@@ -99,7 +99,7 @@ void printNetworkInfo(const int* ipAddress, const int* mask) {
     hostMaxAddress[3] -= 1;
 
     cout << "Adresse de l'hote maximum : ";
-    printIPAddress(hostMaxAddress);
+    genererAddressIP(hostMaxAddress);
 
     int totalHosts = 1;
     for (int i = 0; i < 4; i++) {
