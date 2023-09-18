@@ -1,11 +1,9 @@
 //Librairies C++
 #include <iostream>
 #include <string>
-#include <sstream>
 
 //Ajout des fichiers annexes
 #include "Fonctions\fonctions.cpp"
-#include "Fonctions\procedures.cpp"
 
 //directive qui utilise tous les noms de l'espace de noms standard std
 using namespace std;
@@ -19,7 +17,7 @@ int main() {
     do {
         choix = AfficheMenu();
 
-        //Options
+        //Options du menu
         switch (choix) {
             case 1:
                 cout << "Saisir une adresse IP : ";
@@ -43,7 +41,7 @@ int main() {
                 cout << "Saisir un masque de sous-reseau en format CIDR : ";
                 cin >> masqueSousReseaux;
                 if (CIDR(masqueSousReseaux)) {
-                    int prefix = stoi(masqueSousReseaux);
+                    int prefix = stoi(masqueSousReseaux); //conversion de la chaine de caracteres masqueSousReseaux en un entier
                     convertirCIDREnMasque(prefix, maskOctets);
                 } else {
                     cout << "CIDR invalide !" << endl;
@@ -59,7 +57,7 @@ int main() {
                 break;
             case 6:
                 cout << "Infos reseau :" << endl;
-                printNetworkInfo(ipOctets, maskOctets);
+                genererInfoReseau(ipOctets, maskOctets);
                 break;
             case 7:
                 cout << "Adresse IP du poste en format binaire : ";
